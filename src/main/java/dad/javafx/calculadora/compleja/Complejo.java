@@ -52,6 +52,39 @@ public class Complejo {
 		return r;
 	}
 	
+	public Complejo restar(Complejo c) {
+		Complejo r = new Complejo();
+		r.realProperty().bind(realProperty().subtract(c.realProperty()));
+		r.imaginarioProperty().bind(imaginarioProperty().subtract(c.imaginarioProperty()));
+		return r;
+	}
+	
+	public Complejo multiply(Complejo c) {
+		Complejo r = new Complejo();
+		r.realProperty().bind(realProperty()
+				.multiply(c.realProperty())
+				.subtract(imaginarioProperty().multiply(c.imaginarioProperty())));
+		r.imaginarioProperty().bind(realProperty()
+				.multiply(c.imaginarioProperty())
+				.add(imaginarioProperty().multiply(c.realProperty())));
+		return r;
+	}
+	
+	public Complejo divide(Complejo c) {
+		Complejo r = new Complejo();
+		r.realProperty().bind((realProperty()
+				.multiply(c.realProperty())
+				.add(imaginarioProperty().multiply(c.imaginarioProperty())))
+				.divide(c.realProperty().multiply(c.realProperty()).add(c.imaginarioProperty().multiply(c.imaginarioProperty()))));
+		
+		r.imaginarioProperty().bind((imaginarioProperty()
+				.multiply(c.realProperty())
+				.subtract(realProperty().multiply(c.imaginarioProperty())))
+				.divide(c.realProperty().multiply(c.realProperty()).add(c.imaginarioProperty().multiply(c.imaginarioProperty()))));
+		
+		return r;
+	}
+	
 	public static void main(String[] args) {
 		Complejo a = new Complejo(1, 2);
 		Complejo b = new Complejo(3, 4);
